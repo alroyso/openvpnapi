@@ -68,6 +68,7 @@ public class OpenVpnConnector {
 
     public static void disconnectFromVpn(Context context) {
         Intent intent = new Intent(context, DisconnectVpnActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
