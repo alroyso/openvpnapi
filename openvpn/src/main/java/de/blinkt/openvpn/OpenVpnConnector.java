@@ -32,7 +32,7 @@ public class OpenVpnConnector {
             if (!TextUtils.isEmpty(password)) {
                 intent.putExtra(ConnectVpnAuthActivity.KEY_PASSWORD, password);
             }
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(ConnectVpnAuthActivity.KEY_RETRY, mConnectRetry);
             context.startActivity(intent);
         } else {
