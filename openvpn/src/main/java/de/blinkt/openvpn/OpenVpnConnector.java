@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import de.blinkt.openvpn.core.ConfigParser;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 
@@ -67,9 +68,12 @@ public class OpenVpnConnector {
     }
 
     public static void disconnectFromVpn(Context context) {
-        Intent intent = new Intent(context, DisconnectVpnActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+//        Intent intent = new Intent(context, DisconnectVpnActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(intent);
+        Intent intent = new Intent(context, OpenVPNService.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.stopService(intent);
     }
 
 }

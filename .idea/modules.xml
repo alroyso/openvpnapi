@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openvpn/openvpn.iml" filepath="$PROJECT_DIR$/.idea/modules/openvpn/openvpn.iml" group="openvpnapi/openvpn" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openvpnapi.iml" filepath="$PROJECT_DIR$/.idea/modules/openvpnapi.iml" group="openvpnapi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openvpnapi.iml" filepath="$PROJECT_DIR$/.idea/modules/openvpnapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openvpn/openvpnapi.openvpn.iml" filepath="$PROJECT_DIR$/.idea/modules/openvpn/openvpnapi.openvpn.iml" />
     </modules>
   </component>
 </project>
