@@ -8,6 +8,7 @@ package de.blinkt.openvpn;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import de.blinkt.openvpn.core.OpenVPNService;
@@ -16,7 +17,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 /**
  * Created by arne on 13.10.13.
  */
-public class DisconnectVpnActivity extends Activity implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
+public class DisconnectVpnActivity extends Activity{
     protected OpenVPNService mService;
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -28,12 +29,6 @@ public class DisconnectVpnActivity extends Activity implements DialogInterface.O
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             OpenVPNService.LocalBinder binder = (OpenVPNService.LocalBinder) service;
             mService = binder.getService();
-
-
-            if (mService != null && mService.getManagement() != null)
-                mService.getManagement().stopVPN(false);
-
-            finish();
         }
 
         @Override
@@ -50,7 +45,27 @@ public class DisconnectVpnActivity extends Activity implements DialogInterface.O
         intent.setAction(OpenVPNService.START_SERVICE);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
        // showDisconnectDialog();
-        ProfileManager.setConntectedVpnProfileDisconnected(this);
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+
+                if (mService != null && mService.getManagement() != null){
+                    ProfileManager.setConntectedVpnProfileDisconnected(DisconnectVpnActivity.this);
+                    mService.getManagement().stopVPN(false);
+                }
+
+                finish();
+            }
+        };
+        r.run();
     }
 
     @Override
@@ -59,29 +74,4 @@ public class DisconnectVpnActivity extends Activity implements DialogInterface.O
         unbindService(mConnection);
     }
 
-    private void showDisconnectDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title_cancel);
-        builder.setMessage(R.string.cancel_connection_query);
-        builder.setNegativeButton(android.R.string.no, this);
-        builder.setPositiveButton(android.R.string.yes, this);
-        builder.setOnCancelListener(this);
-
-        builder.show();
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if (which == DialogInterface.BUTTON_POSITIVE) {
-            ProfileManager.setConntectedVpnProfileDisconnected(this);
-            if (mService != null && mService.getManagement() != null)
-                mService.getManagement().stopVPN(false);
-        }
-        finish();
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        finish();
-    }
 }
